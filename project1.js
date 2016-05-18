@@ -1,6 +1,6 @@
 var gameport = document.getElementById("gameport");
 
-var renderer = PIXI.autoDetectRenderer(800, 400, {backgroundColor: 0xffccff});
+var renderer = PIXI.autoDetectRenderer(800, 400, {backgroundColor: 0x33cccc});
 gameport.appendChild(renderer.view);
 
 var stage = new PIXI.Container();
@@ -13,7 +13,21 @@ spriteT.anchor.set(0.5);
 spriteT.position.set(50,200);
 stage.addChild(spriteT);
 
+//birdhouse pinwheel added
+var textureP = PIXI.Texture.fromImage("pinwheel.png");
+var spriteP = new PIXI.Sprite(textureP);
 
+spriteP.anchor.set(0.5);
+spriteP.position.set(373,206);
+stage.addChild(spriteP);
+
+//birdhouse added
+var textureB = PIXI.Texture.fromImage("birdhouse.png");
+var spriteB = new PIXI.Sprite(textureB);
+
+spriteB.anchor.set(0.5);
+spriteB.position.set(400,200);
+stage.addChild(spriteB);
 
 //start bird.png addition
 var texture = PIXI.Texture.fromImage("bird.png");
@@ -30,21 +44,21 @@ stage.addChild(sprite);
 //end bird.png
 
 //start text for bird
-var birdText = new PIXI.Text("hey what's up");
+var birdText = new PIXI.Text("help me out", {font : '10px Arial'});
 
 birdText.x = 100;
-birdText.y = 125;
+birdText.y = 150;
 
 stage.addChild(birdText);
 //end text
 
 //a big rectangle graphic to enclose sticks
 var graphics = new PIXI.Graphics();
-graphics.beginFill(0x00cca3);
-graphics.drawRect(725,25,50,325);
+graphics.beginFill(0x70dbdb);
+graphics.drawRoundedRect(725,25,50,315);
 stage.addChild(graphics);
 
-//add stick type 1
+//add stick type 1 (x2)
 var texture2 = PIXI.Texture.fromImage('stick1.png');
 var sprite2 = new PIXI.Sprite(texture2);
 sprite2.anchor.set(0.5);
@@ -149,6 +163,7 @@ function onDragMove() {
 
 function animate() {
   requestAnimationFrame(animate);
+  spriteP.rotation += 0.03;
   renderer.render(stage);
 }
 animate();
