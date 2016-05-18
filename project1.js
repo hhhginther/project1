@@ -50,7 +50,7 @@ spriteBird.position.y = 175;
 stage.addChild(spriteBird);
 //end bird.png
 
-//start bird2 & button, with animation
+//start bird2 & button, (with animation?)
 var birdMov = new PIXI.Container();
 birdMov.position.set(425,150);
 stage.addChild(birdMov);
@@ -63,9 +63,19 @@ birdMov.addChild(spriteBird2);
 
 var buttonTexture = PIXI.Texture.fromImage("doneButton.png");
 var spriteButton = new PIXI.Sprite(buttonTexture);
+
+//interactive button..
+spriteButton.interactive = true;
+spriteButton.on('mousedown', onDown);
+
 spriteButton.anchor.set(0.5);
 spriteButton.position.set(50,0);
 birdMov.addChild(spriteButton);
+
+var doneText = new PIXI.Text("Thanks dude", {font: '10px Arial'});
+doneText.position.set(100,150);
+stage.addChild(doneText);
+doneText.visible = false;
 
 //start text for bird
 var birdText = new PIXI.Text("help me out", {font : '10px Arial'});
@@ -184,10 +194,27 @@ function onDragMove() {
     }
 }
 
+function onDown (event) {
+  doneText.visible = true;
+  birdText.visible = false;
+}
+
+birdMovCount=0;
 
 function animate() {
   requestAnimationFrame(animate);
   spriteP.rotation += 0.03;
   renderer.render(stage);
-}
+
+  if(birdMovCount < 6){
+    birdMov.position.y += .5;
+    birdMovCount ++;
+  }
+  else if(birdMovCount >= 6 && birdMovCount < 12){
+    birdMov.position.y -=.5;
+    birdMovCount++;
+  }
+  else birdMovCount = 0;
+  }
+
 animate();
