@@ -5,6 +5,13 @@ gameport.appendChild(renderer.view);
 
 var stage = new PIXI.Container();
 
+//add simple bg- edit later!!!!
+var bg = PIXI.Texture.fromImage("bgTest.png");
+var bgSprite = new PIXI.Sprite(bg);
+bgSprite.anchor.set(0.5);
+bgSprite.position.set(400,200);
+stage.addChild(bgSprite);
+
 //add a tree
 var textureT = PIXI.Texture.fromImage("tree.png");
 var spriteT = new PIXI.Sprite(textureT);
@@ -30,18 +37,35 @@ spriteB.position.set(400,200);
 stage.addChild(spriteB);
 
 //start bird.png addition
-var texture = PIXI.Texture.fromImage("bird.png");
+var textureBird = PIXI.Texture.fromImage("bird.png");
 
-var sprite = new PIXI.Sprite(texture);
+var spriteBird = new PIXI.Sprite(textureBird);
 
-sprite.anchor.x = 0.5;
-sprite.anchor.y = 0.5;
+spriteBird.anchor.x = 0.5;
+spriteBird.anchor.y = 0.5;
 
-sprite.position.x = 75;
-sprite.position.y = 175;
+spriteBird.position.x = 75;
+spriteBird.position.y = 175;
 
-stage.addChild(sprite);
+stage.addChild(spriteBird);
 //end bird.png
+
+//start bird2 & button, with animation
+var birdMov = new PIXI.Container();
+birdMov.position.set(425,150);
+stage.addChild(birdMov);
+
+var textureBird2 = PIXI.Texture.fromImage("bird2.png");
+var spriteBird2 = new PIXI.Sprite(textureBird2);
+spriteBird2.anchor.set(0.5);
+spriteBird2.position.set(70,35);
+birdMov.addChild(spriteBird2);
+
+var buttonTexture = PIXI.Texture.fromImage("doneButton.png");
+var spriteButton = new PIXI.Sprite(buttonTexture);
+spriteButton.anchor.set(0.5);
+spriteButton.position.set(50,0);
+birdMov.addChild(spriteButton);
 
 //start text for bird
 var birdText = new PIXI.Text("help me out", {font : '10px Arial'});
