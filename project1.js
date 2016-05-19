@@ -72,10 +72,17 @@ spriteButton.anchor.set(0.5);
 spriteButton.position.set(50,0);
 birdMov.addChild(spriteButton);
 
+//if actually done
 var doneText = new PIXI.Text("Thanks dude", {font: '10px Arial'});
 doneText.position.set(100,150);
 stage.addChild(doneText);
 doneText.visible = false;
+
+//if not done yet
+var notDoneText = new PIXI.Text("you didn't even use all the sticks", {font: '10px Arial'});
+notDoneText.position.set(100,150);
+stage.addChild(notDoneText);
+notDoneText.visible = false;
 
 //start text for bird
 var birdText = new PIXI.Text("help me out", {font : '10px Arial'});
@@ -87,10 +94,14 @@ stage.addChild(birdText);
 //end text
 
 //a big rectangle graphic to enclose sticks
+var stickBox = new PIXI.Container();
+stickBox.position.set(725,25);
+stage.addChild(stickBox);
+
 var graphics = new PIXI.Graphics();
 graphics.beginFill(0x70dbdb);
-graphics.drawRoundedRect(725,25,50,315);
-stage.addChild(graphics);
+graphics.drawRoundedRect(0,0,50,315);
+stickBox.addChild(graphics);
 
 //add stick type 1 (x2)
 var texture2 = PIXI.Texture.fromImage('stick1.png');
@@ -172,8 +183,17 @@ sprite4_2.on('mouseupoutside', onDragEnd);
 sprite4_2.on('mousemove', onDragMove);
 
 stage.addChild(sprite4_2);
-
 //end stick 3
+
+var stickArray = [sprite2,sprite2_2,sprite3,sprite3_2,sprite4, sprite4_2];
+
+//start medal
+var medalTexture = PIXI.Texture.fromImage("medal.png");
+var medalSprite = new PIXI.Sprite(medalTexture);
+medalSprite.anchor.set(0.5);
+medalSprite.position.set(500,125);
+stage.addChild(medalSprite);
+medalSprite.visible = false;
 
 function onDragStart(event)
 {
@@ -186,7 +206,7 @@ function onDragEnd() {
     this.data = null;
 }
 
-function onDragMove() {
+function onDragMove () {
     if (this.dragging) {
         var move = this.data.getLocalPosition(this.parent);
         this.position.x = move.x;
@@ -195,8 +215,26 @@ function onDragMove() {
 }
 
 function onDown (event) {
-  doneText.visible = true;
-  birdText.visible = false;
+  if(checkSticks()){
+    doneText.visible = true;
+    birdText.visible = false;
+    medalSprite.visible = true;
+  }
+  else{
+    notDoneText.visible= true;
+    birdText.visible = false;
+  }
+}
+
+//var stickBounds = stickBox.getBounds();
+
+function checkSticks () {
+  for (var i =0;i<stickArray.length;i++){
+    if(stickArray[i].position.x >= 725 && stickArray[i].position.y >=25){
+      return false;
+    }
+  }
+  return true;
 }
 
 birdMovCount=0;
