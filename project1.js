@@ -103,6 +103,12 @@ graphics.beginFill(0x70dbdb);
 graphics.drawRoundedRect(0,0,50,315);
 stickBox.addChild(graphics);
 
+//and a smaller rectangle for a hat
+var graphics2 = new PIXI.Graphics();
+graphics2.beginFill(0x70dbdb);
+graphics2.drawRoundedRect(650,290,50,50);
+stage.addChild(graphics2);
+
 //add stick type 1 (x2)
 var texture2 = PIXI.Texture.fromImage('stick1.png');
 var sprite2 = new PIXI.Sprite(texture2);
@@ -185,6 +191,47 @@ sprite4_2.on('mousemove', onDragMove);
 stage.addChild(sprite4_2);
 //end stick 3
 
+//start hats (four diff!!)
+var hatTexture = PIXI.Texture.fromImage("hat.png");
+var hatSprite = new PIXI.Sprite(hatTexture);
+hatSprite.anchor.set(0.5);
+hatSprite.position.set(675,320);
+
+var hatTexture2 = PIXI.Texture.fromImage("hat2.png");
+var hatSprite2 = new PIXI.Sprite(hatTexture2);
+hatSprite2.anchor.set(0.5);
+hatSprite2.position.set(675,320);
+
+var hatTexture3 = PIXI.Texture.fromImage("hat3.png");
+var hatSprite3 = new PIXI.Sprite(hatTexture3);
+hatSprite3.anchor.set(0.5);
+hatSprite3.position.set(675,320);
+
+var hatTexture4 = PIXI.Texture.fromImage("hat4.png");
+var hatSprite4 = new PIXI.Sprite(hatTexture4);
+hatSprite4.anchor.set(0.5);
+hatSprite4.position.set(675,320);
+//end hats
+
+hatArray = [hatSprite, hatSprite2, hatSprite3, hatSprite4];
+
+function chooseHat(){
+  var hatIndex = Math.floor((Math.random() *4));
+  var chosenHat = hatArray[hatIndex];
+
+  chosenHat.interactive = true;
+  chosenHat.on('mousedown', onDragStart);
+  chosenHat.on('mouseup', onDragEnd);
+  chosenHat.on('mouseupoutside', onDragEnd);
+  chosenHat.on('mousemove', onDragMove);
+
+  stage.addChild(chosenHat);
+}
+
+chooseHat();
+
+
+
 var stickArray = [sprite2,sprite2_2,sprite3,sprite3_2,sprite4, sprite4_2];
 
 //start medal
@@ -219,6 +266,7 @@ function onDown (event) {
     doneText.visible = true;
     birdText.visible = false;
     medalSprite.visible = true;
+    notDoneText.visible= false;
   }
   else{
     notDoneText.visible= true;
